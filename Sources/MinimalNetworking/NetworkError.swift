@@ -19,6 +19,27 @@ public enum NetworkError: LocalizedError, Equatable {
     case decodingError(String)
     case urlSessionFailed(URLError)
     case unknownError
+    
+    public var errorDescription: String? {
+        switch self {
+        case .invalidRequest, .badRequest:
+            "Invalid or bad Request"
+        case .unauthorized, .forbidden:
+            "Not Authorized"
+        case .notFound:
+            "Resource Not found"
+        case let .apiError(code):
+            "\(code)"
+        case .serverError:
+            "Server Error"
+        case let .decodingError(desc):
+            "\(desc)"
+        case let .urlSessionFailed(err):
+            err.localizedDescription
+        case .unknownError:
+            "Unknown Error"
+        }
+    }
 }
 
 extension Requestable {

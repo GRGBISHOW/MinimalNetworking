@@ -17,6 +17,7 @@ public protocol Requestable {
     static var queryParams: [String: Any]? { get }
     static var headers: [String: String]? { get }
     static var host: APIHostable { get }
+    static var session: URLSessionProtocol { get }
 }
 
 /// Some default implementation for Requestable
@@ -34,10 +35,10 @@ public struct EmptyResponse: Decodable {}
 public protocol APIHostable {
     var baseUrl: String { get }
 }
-
+private let handler = RequestHandler()
 /// NeworkService Provider
 public struct NetworkService {
     public static var urlSession: () -> URLSessionProtocol = {
-        RequestHandler()
+        handler
     }
 }
